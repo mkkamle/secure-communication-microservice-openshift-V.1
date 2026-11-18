@@ -1,0 +1,47 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_db
+    username: postgres
+    password: MKkamble5A$
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/finmesh
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+services:
+  customer:
+    url: ${CUSTOMER_SERVICE_URL:http://localhost:8081}
+
+  product:
+    url: ${PRODUCT_SERVICE_URL:http://localhost:8082}
+
+  payment:
+    url: ${PAYMENT_SERVICE_URL:http://localhost:8083}
+
+  notification:
+    url: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
